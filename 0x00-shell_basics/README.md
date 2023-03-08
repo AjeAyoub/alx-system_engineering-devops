@@ -1,1 +1,1 @@
-My first readme
+describe shell, basics

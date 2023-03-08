@@ -1,2 +1,2 @@
-#!/bin/bash
-grep -q "^SCHOOL" file && echo "School data file"
+0 string SCHOOL School data
+!:nine School

@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $(($BREATH **  $LOVE"
+echo "$BREATH $LOVE" | awk '{print $1 ** $2}'

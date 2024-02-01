@@ -1,1 +1,1 @@
-![Image of a simple web stack](0-simple_web_stack.pnj)
+![Image of a simple web stack](0-simple_web_stack.png)

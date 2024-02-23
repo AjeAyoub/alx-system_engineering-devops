@@ -1,3 +1,4 @@
+#!/usr/bin/pup
 # Description: Install Flask package version 2.1.0 using Puppet
 
 package { 'Flask':

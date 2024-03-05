@@ -1,33 +1,55 @@
 #!/usr/bin/env bash
-# configures a new Ubuntu machine
-# Install nginx on web-01 server
-apt-get -y update
-apt-get -y install nginx
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
+# Handle 404 errors
 
-# Add custom response header to know the server name for debugging
-HOST_NAME=$(hostname)
-HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
-FIND=$(grep "X-Server-by" /etc/nginx/sites-available/default)
-if [[ -z $FIND ]]; then
-    sed -i "23i $HEADER" /etc/nginx/sites-available/default
-fi
+# Update and Install nginx
+sudo apt -y update
+sudo apt -y install nginx
 
-# Create a firts index.html page
-echo "Hello World!" > /var/www/html/index.html
+# Remove & replace /var/www to store static content
+# Created /var/www/school/errors to store 404 error message
 
-# Add to the nginx configuration file a redirection to another page
-FIND=$(grep "redirect_me" /etc/nginx/sites-available/default)
-STRING="\\\n\tlocation /redirect_me {\n\t\t return 301 https://www.youtube.com/watch?v=3MbaGJN2ioQ;\n\t}\n"
-if [[ -z $FIND ]]; then
-    sed -i "42i $STRING" /etc/nginx/sites-available/default
-fi
+rm -rf school
+mkdir school
+mkdir school/errors
+echo "Ceci n'est pas une page" > school/errors/404.html
 
-# Add to the nginx configuration file a error page 404
-FIND=$(grep "error_page 404" /etc/nginx/sites-available/default)
-ERROR="\\\n\terror_page 404 /custom_404.html;\n"
-if [[ -z $FIND ]]; then
-    echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
-    sed -i "40i $ERROR" /etc/nginx/sites-available/default
-fi
+touch school/index.html
+echo "Hello World!" > school/index.html
 
-service nginx restart
+sudo rm -rf /var/www/school
+sudo mv school /var/www/
+
+# Change the default configuration of nginx
+# Add redirection for localhost/redirect_me
+# Return  404.html in case of a 404 error (page not found)
+# Adde a header "X-server-BY" = $HOSTNAME
+
+touch default
+printf %s "server {
+        listen 80;
+        listen [::]:80;
+        add_header X-Served-By $HOSTNAME;
+
+        root /var/www/school;
+        index index.html;
+
+        location /redirect_me {
+            return 301 https://youtube.com;
+        }
+
+        error_page 404 /404.html;
+        location = /404.html {
+            root /var/www/school/errors/;
+        }
+}
+" > default
+
+# Remove and replace existing configurations
+sudo rm -rf /etc/nginx/sites-available/default
+sudo rm -rf /etc/nginx/sites-enabled/default
+sudo mv default /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Restart nginx
+sudo service nginx restart

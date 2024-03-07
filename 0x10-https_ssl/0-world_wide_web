@@ -28,3 +28,4 @@ check_domain() {
 	fi
 }
 check_domain "$1" "$2"
+

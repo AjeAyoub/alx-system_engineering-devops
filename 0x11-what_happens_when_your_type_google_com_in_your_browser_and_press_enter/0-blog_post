@@ -1,0 +1,21 @@
++ What happens when you type google.com in your browser and press Enter ?
+
+- Initiating a browser request for "google.com" triggers a series of intricate processes within the digital infrastructure. Here's a breakdown of the technical components involved:
+
+- DNS Resolution: The browser sends a DNS request to resolve the domain name "google.com" to its corresponding IP address.
+
+- TCP/IP Connection: Once the IP address is obtained, the browser establishes a TCP/IP connection to the server hosting "google.com."
+
+- Firewall Inspection: The connection may pass through a firewall, which inspects and filters incoming and outgoing traffic based on predefined security rules.
+
+- HTTPS/SSL Handshake: If "google.com" uses HTTPS, the browser and server engage in an SSL/TLS handshake to establish a secure encrypted connection.
+
+- Load Balancing: Load balancers distribute incoming traffic across multiple servers to optimize resource utilization and ensure high availability.
+
+- Web Server Processing: The request reaches a web server, where it's processed, and a response is generated. This response typically includes HTML, CSS, JavaScript, and other resources.
+
+- Application Server Interaction: For dynamic content or complex interactions, the web server communicates with application servers to execute backend logic.
+
+- Database Query: Application servers may query databases to retrieve or manipulate data required to fulfill the request.
+
+- In summary, the process involves DNS resolution, TCP/IP connection establishment, firewall inspection, HTTPS/SSL encryption, load balancing, web server processing, application server interaction, and database queries to deliver the requested content to the browser.

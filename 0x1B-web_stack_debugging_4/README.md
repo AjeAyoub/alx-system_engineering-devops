@@ -36,7 +36,3 @@ GitHub repository: alx-system_engineering-devops
 1-user_limit.pp: Puppet manifest for task 1.
 * Author
 Authored by [Ayoub Ajeddab] ([Your GitHub Profile](https://github.com/AjeAyoub))
-
-
-
-
